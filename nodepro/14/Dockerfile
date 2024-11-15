@@ -9,18 +9,6 @@ RUN         apt update \
 # Install npm, TypeScript, and Node types
 RUN         npm install npm@9.8.1 typescript ts-node @types/node --location=global
 
-# Install pnpm
-RUN         npm install -g corepack \
-            && corepack enable \
-            && corepack prepare pnpm@latest --activate
-
-# Install Bun
-RUN         curl -fsSL https://bun.sh/install | bash \
-            && mv /root/.bun/bin/bun /usr/local/bin/bun
-
-# Install pm2 and Sentry CLI globally
-RUN         npm install -g pm2 @sentry/cli
-
 USER        container
 ENV         USER=container HOME=/home/container
 WORKDIR     /home/container
