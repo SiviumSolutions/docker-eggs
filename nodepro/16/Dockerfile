@@ -9,10 +9,6 @@ RUN         apt update \
 # Install npm, TypeScript, and Node types
 RUN         npm install npm@9.8.1 typescript ts-node @types/node --location=global
 
-# Directly install pnpm (bypassing corepack for compatibility)
-RUN         curl -fsSL https://get.pnpm.io/install.sh | sh - \
-            && ln -s /root/.local/share/pnpm/pnpm /usr/local/bin/pnpm
-
 # Install Bun
 RUN         curl -fsSL https://bun.sh/install | bash \
             && mv /root/.bun/bin/bun /usr/local/bin/bun
