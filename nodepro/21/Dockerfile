@@ -13,8 +13,8 @@ RUN         npm install npm@10.x.x typescript ts-node @types/node --location=glo
 RUN         curl -fsSL https://bun.sh/install | bash \
             && mv /root/.bun/bin/bun /usr/local/bin/bun
 
-# Install pm2, Sentry CLI, and  globally
-RUN         npm install -g pm2 @sentry/cli yarn 
+# Install pm2, Sentry CLI, and Wrangler globally
+RUN         npm install -g pm2 @sentry/cli wrangler --force
 
 # Install acme.sh
 RUN         curl https://get.acme.sh | sh \
