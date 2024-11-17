@@ -21,7 +21,7 @@ RUN         mkdir -p /home/container/.acme /home/container/.ssl
 # Clone acme.sh and install with custom paths under /home/container
 RUN         git clone --depth 1 https://github.com/acmesh-official/acme.sh.git \
             && cd acme.sh \
-            && ./acme.sh --install \
+            && ./acme.sh --install --force \
             --home /home/container/.acme \
             --config-home /home/container/.acme/data \
             --cert-home /home/container/.ssl \
@@ -32,7 +32,7 @@ RUN         git clone --depth 1 https://github.com/acmesh-official/acme.sh.git \
             && chmod -R 755 /home/container/.acme /home/container/.ssl \
             && ln -s /home/container/.acme/acme.sh /usr/local/bin/acme.sh \
             && rm -rf acme.sh
-            
+
 USER        container
 ENV         USER=container HOME=/home/container
 WORKDIR     /home/container
