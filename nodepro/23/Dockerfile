@@ -14,7 +14,11 @@ RUN         curl -fsSL https://bun.sh/install | bash \
             && mv /root/.bun/bin/bun /usr/local/bin/bun
 
 # Install pm2 and Sentry CLI globally
-RUN         npm install -g pm2 @sentry/cli
+RUN         npm install -g pm2 @sentry/cli yarn wrangler
+
+# Install acme.sh
+RUN         curl https://get.acme.sh | sh \
+            && ln -s /root/.acme.sh/acme.sh /usr/local/bin/acme.sh
 
 USER        container
 ENV         USER=container HOME=/home/container
