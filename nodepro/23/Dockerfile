@@ -3,7 +3,7 @@ FROM        --platform=$TARGETOS/$TARGETARCH node:23-bookworm-slim
 LABEL       author="Max Nomad" maintainer="info@sivium.solutions"
 
 RUN         apt update \
-            && apt -y install ffmpeg iproute2 git sqlite3 libsqlite3-dev python3 python3-dev ca-certificates dnsutils tzdata zip tar curl build-essential libtool iputils-ping libnss3 tini \
+            && apt -y install cron ffmpeg iproute2 git sqlite3 libsqlite3-dev python3 python3-dev ca-certificates dnsutils tzdata zip tar curl build-essential libtool iputils-ping libnss3 tini \
             && useradd -m -d /home/container container
 
 # Install npm, TypeScript, and Node types
@@ -17,7 +17,7 @@ RUN         curl -fsSL https://bun.sh/install | bash \
 RUN         npm install -g pm2 @sentry/cli wrangler --force
 
 # Install acme.sh
-RUN         curl https://get.acme.sh | sh \
+RUN         curl https://get.acme.sh | sh -s -- --install --force \
             && chmod +x /root/.acme.sh/acme.sh \
             && ln -s /root/.acme.sh/acme.sh /usr/local/bin/acme.sh
 
