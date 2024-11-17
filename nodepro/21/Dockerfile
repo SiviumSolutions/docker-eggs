@@ -16,7 +16,23 @@ RUN         curl -fsSL https://bun.sh/install | bash \
 # Install pm2, Sentry CLI, and Wrangler globally
 RUN         npm install -g pm2 @sentry/cli wrangler
 
+RUN         mkdir -p /home/container/.acme /home/container/.ssl
 
+# Clone acme.sh and install with custom paths under /home/container
+RUN         git clone --depth 1 https://github.com/acmesh-official/acme.sh.git \
+            && cd acme.sh \
+            && ./acme.sh --install \
+            --home /home/container/.acme \
+            --config-home /home/container/.acme/data \
+            --cert-home /home/container/.ssl \
+            --accountemail "my@example.com" \
+            --accountkey /home/container/.acme/account.key \
+            --accountconf /home/container/.acme/account.conf \
+            --useragent "this is my client." \
+            && chmod -R 755 /home/container/.acme /home/container/.ssl \
+            && ln -s /home/container/.acme/acme.sh /usr/local/bin/acme.sh \
+            && rm -rf acme.sh
+            
 USER        container
 ENV         USER=container HOME=/home/container
 WORKDIR     /home/container
