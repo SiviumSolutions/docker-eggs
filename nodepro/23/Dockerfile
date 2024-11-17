@@ -18,6 +18,7 @@ RUN         npm install -g pm2 @sentry/cli wrangler --force
 
 # Install acme.sh
 RUN         curl https://get.acme.sh | sh \
+            && chmod +x /root/.acme.sh/acme.sh \
             && ln -s /root/.acme.sh/acme.sh /usr/local/bin/acme.sh
 
 USER        container
