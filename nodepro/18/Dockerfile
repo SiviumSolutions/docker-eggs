@@ -14,6 +14,7 @@ RUN         curl -fsSL https://bun.sh/install | bash \
             && mv /root/.bun/bin/bun /usr/local/bin/bun
 
 # install pnpm
+ENV COREPACK_INTEGRITY_KEYS=0
 RUN         npm install -g corepack
 RUN         corepack enable
 RUN         corepack prepare pnpm@latest --activate
