@@ -30,12 +30,12 @@ jobs:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
           password: ${{ secrets.REGISTRY_TOKEN }}
-      - uses: docker/build-push-action@v5
+      - uses: docker/build-push-action@v6
         with:
           context: ./oses/${{ matrix.oses }}
           file: ./oses/${{ matrix.oses }}/Dockerfile
           platforms: linux/amd64,linux/arm64
           push: true
           tags: |
-            ghcr.io/pelican-eggs/yolks:${{ matrix.oses }}
-            ghcr.io/parkervcp/yolks:${{ matrix.oses }}
+            ghcr.io/${{ github.repository_owner }}/yolks:${{ matrix.oses }}
+            ${{ github.repository_owner == 'pelican-eggs' && format('ghcr.io/parkervcp/yolks:{0}', matrix.oses) || '' }}

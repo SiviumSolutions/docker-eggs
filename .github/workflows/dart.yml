@@ -33,12 +33,12 @@ jobs:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
           password: ${{ secrets.REGISTRY_TOKEN }}
-      - uses: docker/build-push-action@v5
+      - uses: docker/build-push-action@v6
         with:
           context: ./dart
           file: ./dart/${{ matrix.tag }}/Dockerfile
           platforms: linux/amd64,linux/arm64
           push: true
           tags: |
-            ghcr.io/pelican-eggs/yolks:dart_${{ matrix.tag }}
-            ghcr.io/parkervcp/yolks:dart_${{ matrix.tag }}
+            ghcr.io/${{ github.repository_owner }}/yolks:dart_${{ matrix.tag }}
+            ${{ github.repository_owner == 'pelican-eggs' && format('ghcr.io/parkervcp/yolks:dart_{0}', matrix.tag) || '' }}

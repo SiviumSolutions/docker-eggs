@@ -41,7 +41,7 @@ jobs:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
           password: ${{ secrets.REGISTRY_TOKEN }}
-      - uses: docker/build-push-action@v5
+      - uses: docker/build-push-action@v6
         with:
           context: ./bot/${{ matrix.tag }}
           file: ./bot/${{ matrix.tag }}/Dockerfile
@@ -50,8 +50,8 @@ jobs:
           cache-to: type=local,dest=/tmp/.buildx-cache-new
           push: true
           tags: |
-            ghcr.io/pelican-eggs/yolks:bot_${{ matrix.tag }}
-            ghcr.io/parkervcp/yolks:bot_${{ matrix.tag }}
+            ghcr.io/${{ github.repository_owner }}/yolks:bot_${{ matrix.tag }}
+            ${{ github.repository_owner == 'pelican-eggs' && format('ghcr.io/parkervcp/yolks:bot_{0}', matrix.tag) || '' }}
       - name: Move cache
         run: |
           rm -rf /tmp/.buildx-cache
@@ -76,11 +76,11 @@ jobs:
   #         registry: ghcr.io
   #         username: ${{ github.repository_owner }}
   #         password: ${{ secrets.REGISTRY_TOKEN }}
-  #     - uses: docker/build-push-action@v5
+  #     - uses: docker/build-push-action@v6
   #       with:
   #         context: ./bot/${{ matrix.tag }}
   #         file: ./bot/${{ matrix.tag }}/Dockerfile
   #         platforms: linux/amd64
   #         push: true
   #         tags: |
-  #           ghcr.io/parkervcp/yolks:bot_${{ matrix.tag }}
+  #           ${{ github.repository_owner == 'pelican-eggs' && format('ghcr.io/parkervcp/yolks:bot_{0}', matrix.tag) || '' }}

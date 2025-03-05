@@ -31,12 +31,12 @@ jobs:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
           password: ${{ secrets.REGISTRY_TOKEN }}
-      - uses: docker/build-push-action@v5
+      - uses: docker/build-push-action@v6
         with:
           context: ./rust
           file: ./rust/${{ matrix.tag }}/Dockerfile
           platforms: linux/amd64,linux/arm64
           push: true
           tags: |
-            ghcr.io/pelican-eggs/yolks:rust_${{ matrix.tag }}
-            ghcr.io/parkervcp/yolks:rust_${{ matrix.tag }}
+            ghcr.io/${{ github.repository_owner }}/yolks:rust_${{ matrix.tag }}
+            ${{ github.repository_owner == 'pelican-eggs' && format('ghcr.io/parkervcp/yolks:rust_{0}', matrix.tag) || '' }}

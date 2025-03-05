@@ -24,6 +24,7 @@ jobs:
           - 19
           - 20
           - 21
+          - 22
           - 23
     steps:
       - uses: actions/checkout@v4
@@ -37,12 +38,12 @@ jobs:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
           password: ${{ secrets.REGISTRY_TOKEN }}
-      - uses: docker/build-push-action@v5
+      - uses: docker/build-push-action@v6
         with:
           context: ./nodejs
           file: ./nodejs/${{ matrix.tag }}/Dockerfile
           platforms: linux/amd64,linux/arm64
           push: true
           tags: |
-            ghcr.io/pelican-eggs/yolks:nodejs_${{ matrix.tag }}
-            ghcr.io/parkervcp/yolks:nodejs_${{ matrix.tag }}
+            ghcr.io/${{ github.repository_owner }}/yolks:nodejs_${{ matrix.tag }}
+            ${{ github.repository_owner == 'pelican-eggs' && format('ghcr.io/parkervcp/yolks:nodejs_{0}', matrix.tag) || '' }}
