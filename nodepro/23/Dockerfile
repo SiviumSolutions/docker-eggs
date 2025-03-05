@@ -16,6 +16,11 @@ RUN         curl -fsSL https://bun.sh/install | bash \
 # Install pm2, Sentry CLI, and Wrangler globally
 RUN         npm install -g pm2 @sentry/cli wrangler
 
+# install pnpm
+RUN         npm install -g corepack
+RUN         corepack enable
+RUN         corepack prepare pnpm@latest --activate
+
 USER        container
 ENV         USER=container HOME=/home/container
 WORKDIR     /home/container
